@@ -31,9 +31,12 @@
   changed_when: false
 
 - name: create nginx config for prometheus
-  copy:
-    src: prometheus.nginx.conf
+  template:
+    src: 'prometheus.nginx.conf.j2'
     dest: /etc/nginx/sites-enabled/prometheus.conf
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: restart nginx service
   systemd:

@@ -1,11 +1,12 @@
 server {
   listen 80 default_server;
-  server_name monitor.polkachu.com;
+  server_name {{ grafana_host_name }};
 
   root /usr/share/nginx/html;
   index index.html index.htm;
 
   location / {
+   proxy_set_header Host $http_host;
    proxy_pass http://localhost:3000/;
   }
 

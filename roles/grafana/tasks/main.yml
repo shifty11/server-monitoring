@@ -29,9 +29,12 @@
     state: absent
 
 - name: create nginx config for grafana
-  copy:
-    src: grafana.nginx.conf
+  template:
+    src: 'grafana.nginx.conf.j2'
     dest: /etc/nginx/sites-enabled/grafana.conf
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: restart nginx service
   systemd:
@@ -40,3 +43,7 @@
     daemon_reload: yes
     enabled: yes
   changed_when: false
+
+- name: set grafana admin password
+  command: /usr/sbin/grafana-cli admin reset-admin-password {{ grafana_password|quote }}
+

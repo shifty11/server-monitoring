@@ -6,6 +6,8 @@ notifications_email=someone@gmail.com
 notifications_email_password=hellopassword
 nginx_user=nginx_user
 nginx_password=nginx_password
+grafana_host_name=monitor.polkachu.com
+prometheus_host_name=prometheus.polkachu.com
 
 [all:vars]
 ansible_user=ansible_user
