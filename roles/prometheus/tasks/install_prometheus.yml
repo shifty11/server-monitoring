@@ -1,11 +1,4 @@
 ---
-- name: Create Prometheus user
-  user:
-    name: prometheus
-    comment: 'Prometheus user'
-    shell: /usr/sbin/nologin
-    state: present
-
 - name: Creates Prometheus directory
   file:
     path: '{{ item }}'
