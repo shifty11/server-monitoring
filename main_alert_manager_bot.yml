@@ -1,5 +1,5 @@
 ---
-- name: Update Alert Manager
+- name: Update Alert Manager Bot
   hosts: monitor
   become: true
   gather_facts: false
@@ -9,4 +9,4 @@
         upgrade: dist
         update_cache: true
   roles:
-    - alert_manager
+    - alert_manager_bot

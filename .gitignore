@@ -1,5 +1,6 @@
 inventory
 /roles/prometheus/files/hosts
 /roles/prometheus/files/prometheus.yml
+/group_vars/monitor.yml
 
 .idea

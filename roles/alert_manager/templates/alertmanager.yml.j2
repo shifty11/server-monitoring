@@ -2,15 +2,10 @@ global:
   resolve_timeout: 1m
 
 route:
-  receiver: "gmail-notifications"
+  receiver: 'alertmanager-bot'
 
 receivers:
-  - name: "gmail-notifications"
-    email_configs:
-      - to: {{ notifications_email }}
-        from: {{ notifications_email }}
-        smarthost: smtp.gmail.com:587
-        auth_username: {{ notifications_email }}
-        auth_identity: {{ notifications_email }}
-        auth_password: {{ notifications_email_password }}
-        send_resolved: true
+  - name: 'alertmanager-bot'
+    webhook_configs:
+    - send_resolved: true
+      url: 'http://127.0.0.1:8080'

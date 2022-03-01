@@ -1,0 +1,20 @@
+[Unit]
+Description=AlertManager Telegram Bot Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/local/bin/alertmanager_bot \
+   --store="bolt" \
+   --bolt.path="/etc/alertmanagerbot/bot.db" \
+   --template.paths="/etc/alertmanagerbot/default.tmpl"\
+{% for id in alert_manager_bot_telegram_admins %}
+   --telegram.admin={{ id }} \
+{% endfor %}
+   --telegram.token={{ alert_manager_bot_telegram_token }}
+
+[Install]
+WantedBy=multi-user.target

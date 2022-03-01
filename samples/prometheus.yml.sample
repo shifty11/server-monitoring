@@ -16,3 +16,43 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ["localhost:9090"]
+
+  - job_name: "dig"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["dig:9100", "dig:26660"]
+  - job_name: "dig-backup "
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["dig-backup:9100", "dig-backup:26660"]
+
+  - job_name: "dig-validator"
+    scrape_interval: 30s
+    scrape_timeout: 30s
+    metrics_path: /metrics/validator
+    static_configs:
+      - targets: ["digvaloper1fhp54fwlfmpwwgrnfwk3v47v53yjtp8fw6nelw"]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_address
+      - source_labels: [__param_address]
+        target_label: instance
+      - target_label: __address__
+        replacement: dig-backup:9300
+  - job_name: "dig-validator-wallet"    # specific wallet(s)
+    scrape_interval: 30s
+    metrics_path: /metrics/wallet
+    static_configs:
+      - targets: ["dig1fhp54fwlfmpwwgrnfwk3v47v53yjtp8f356rhm"]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_address
+      - source_labels: [__param_address]
+        target_label: instance
+      - target_label: __address__
+        replacement: dig-backup:9300
+  - job_name: "dig-validators"    # all validators
+    scrape_interval: 30s
+    metrics_path: /metrics/validators
+    static_configs:
+      - targets: ["dig-backup:9300"]

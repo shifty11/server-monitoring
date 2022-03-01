@@ -1,0 +1,43 @@
+---
+- name: Download Alert Manager Bot
+  get_url:
+    url: "https://github.com/metalmatze/alertmanager-bot/releases/download/{{ alert_manager_bot_version }}/alertmanager-bot-{{ alert_manager_bot_version }}-linux-amd64"
+    dest: '/usr/local/bin/alertmanager_bot'
+    remote_src: true
+    owner: prometheus
+    group: prometheus
+    mode: 755
+
+- name: Creates alert manager bot directory
+  file:
+    path: '/etc/alertmanagerbot'
+    state: directory
+    owner: prometheus
+    group: prometheus
+    recurse: true
+    mode: 0755
+  changed_when: false
+
+- name: Copy Alert Manager Bot default template
+  copy:
+    src: 'default.tmpl'
+    dest: '/etc/alertmanagerbot'
+    owner: prometheus
+    group: prometheus
+    mode: 600
+
+- name: Copy Alert Manager Bot service file
+  template:
+    src: 'alertmanagerbot.service.j2'
+    dest: '/etc/systemd/system/alertmanagerbot.service'
+    owner: root
+    group: root
+    mode: 600
+
+- name: Start Alert Manager Bot service
+  systemd:
+    name: alertmanagerbot
+    state: restarted
+    daemon_reload: true
+    enabled: true
+  changed_when: false
