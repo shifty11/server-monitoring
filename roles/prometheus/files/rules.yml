@@ -20,7 +20,7 @@ groups:
           description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: ValidatorRankingTooLow
-        expr: sum by (chain_id) (cosmos_validators_active) - sum by (chain_id)(cosmos_validator_rank) < 10
+        expr: sum by (chain_id) (cosmos_validators_active) - sum by (chain_id)(cosmos_validator_rank) < 0
         for: 0m
         labels:
           severity: error
@@ -29,7 +29,7 @@ groups:
           description: "Validator {{ $labels.moniker }} on {{ $labels.chain_id }} got kicked out of active set."
 
       - alert: ValidatorMissingBlocks
-        expr: delta(cosmos_validator_missed_blocks[10m]) > -1
+        expr: delta(cosmos_validator_missed_blocks[10m]) > 1
         for: 0m
         labels:
           severity: error
