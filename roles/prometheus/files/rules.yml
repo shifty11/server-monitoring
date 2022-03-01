@@ -19,6 +19,15 @@ groups:
           summary: Host high CPU load
           description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
+      - alert: HostDiskSpaceLow
+        expr: 100 - ((node_filesystem_avail_bytes{device!~'rootfs'} * 100) / node_filesystem_size_bytes{device!~'rootfs'}) > 95
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Disk space running low
+          description: "Disk usage on {{ $labels.job }} is over 95%.\nMount point: {{ $labels.mountpoint }}"
+
       - alert: ValidatorRankingTooLow
         expr: sum by (chain_id) (cosmos_validators_active) - sum by (chain_id)(cosmos_validator_rank) < 0
         for: 0m
