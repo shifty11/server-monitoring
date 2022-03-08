@@ -17,7 +17,7 @@ groups:
           severity: warning
         annotations:
           summary: Host high CPU load
-          description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+          description: "CPU load is > 95%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: HostDiskSpaceLow
         expr: 100 - ((node_filesystem_avail_bytes{device!~'rootfs'} * 100) / node_filesystem_size_bytes{device!~'rootfs'}) > 95
