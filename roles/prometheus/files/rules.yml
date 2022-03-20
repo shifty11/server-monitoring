@@ -38,7 +38,7 @@ groups:
           description: "Validator {{ $labels.moniker }} on {{ $labels.chain_id }} got kicked out of active set."
 
       - alert: ValidatorMissingBlocks
-        expr: delta(cosmos_validator_missed_blocks[10m]) > 1
+        expr: delta(cosmos_validator_missed_blocks[5m]) > 10
         for: 0m
         labels:
           severity: error
